@@ -58,8 +58,8 @@ function UserDatabase() {
 
                 setModal({
                     show: true,
-                    title: "¡Eliminado!",
-                    text: "El usuario ha sido eliminado correctamente.",
+                    title: "Deleted!",
+                    text: "The user has been successfully deleted.",
                     icon: "success",
                     type: "alert" 
                 });
@@ -69,7 +69,7 @@ function UserDatabase() {
                 setModal({
                     show: true,
                     title: "Error",
-                    text: "Hubo un problema al intentar eliminar el usuario.",
+                    text: "There was a problem trying to delete the user.",
                     icon: "error",
                     type: "alert"
                 });

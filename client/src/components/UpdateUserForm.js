@@ -124,7 +124,7 @@ function UpdateUserForm() {
                         required
                     />
 
-                    <label className="block text-sm font-medium text-gray-700">Edad</label>
+                    <label className="block text-sm font-medium text-gray-700">Age</label>
                     <input
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors"
                         type="number"
