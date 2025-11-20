@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 
-mongoose.connect("mongodb+srv://eltimo:eltimoyt@mern-stack.e8n2xs5.mongodb.net/mern-app?appName=mern-stack").then
+mongoose.connect("<insert your MongoDB connection string here>").then
 (() => {
     console.log("Connected to the database");
 }).catch((err) => {
