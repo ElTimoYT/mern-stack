@@ -37,8 +37,8 @@ function UserDatabase() {
         setIdToDelete(userId);
         setModal({
             show: true,
-            title: "¿Estás seguro?",
-            text: "Esta acción eliminará al usuario permanentemente. ¿Deseas continuar?",
+            title: "Are you sure?",
+            text: "This action will permanently delete the user. Do you want to continue?",
             icon: "warning",
             type: "confirm" 
         });
