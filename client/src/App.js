@@ -1,79 +1,61 @@
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import Home from './components/Home';
+import UserDatabase from './components/UserDatabase';
+import CreateUserForm from './components/CreateUserForm'; 
+import UpdateUserForm from './components/UpdateUserForm'; 
+
 import './App.css';
 
 function App() {
+    const linkBaseClasses = "block px-4 py-2 rounded-full transition-all duration-300";
+    const linkInactiveClasses = "text-gray-300 hover:bg-indigo-600 hover:text-white";
+    
+    // Componente wrapper para usar hooks de Router
+    const AppContent = () => {
+        const location = useLocation();
 
-  const [listOfUsers, setListOfUsers] = useState([]);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+        // Estilos dinámicos para el enlace activo
+        const getLinkClasses = (path) => 
+            `${linkBaseClasses} ${location.pathname === path || location.pathname.startsWith(path + '/')
+                ? 'bg-indigo-600 text-white shadow-md' 
+                : linkInactiveClasses}`;
 
-  useEffect(() => {
-    axios.get("http://localhost:3001/getUsers").then((response) => {
-      setListOfUsers(response.data);
-    });
-  }, []);
+        return (
+            <>
+                <header className="fixed top-0 left-0 w-full bg-gray-900 shadow-2xl z-50">
+                    <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <ul className="flex items-center justify-start space-x-6 h-16">
+                            <li>
+                                <Link to="/" className={getLinkClasses('/')}>
+                                    Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/users" className={getLinkClasses('/users')}>
+                                    Users
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+                
+                <main className="pt-16 min-h-screen bg-gray-50">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/users" element={<UserDatabase />} />
+                        <Route path="/create" element={<CreateUserForm />} />
+                        <Route path="/update/:id" element={<UpdateUserForm />} />
+                    </Routes>
+                </main>
+            </>
+        );
+    };
 
-  const createUser = () => {
-    axios.post("http://localhost:3001/createUser", {
-      name,
-      age,
-      email,
-      username,
-      password
-    }).then((response) => {
-      Swal.fire({
-        title: "User Created Successfully !",
-        icon: "success",
-        draggable: true
-      });
-      setListOfUsers([...listOfUsers, response.data]);
-    });
-  };
-
-  return (
-    <div className="app-container">
-      
-      <h1 className="title">User Dashboard</h1>
-
-      <div className="form-card">
-        <h2>Create New User</h2>
-
-        {/* Input fields for user details */}
-        <input className="input" type="text" placeholder="Name"
-          onChange={(e) => setName(e.target.value)} />
-
-        <input className="input" type="number" placeholder="Age"
-          onChange={(e) => setAge(e.target.value)} />
-
-        <input className="input" type="text" placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)} />
-
-        <input className="input" type="text" placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)} />
-
-        <input className="input" type="password" placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)} />
-
-        <button className="btn" onClick={createUser}>Create User</button>
-      </div>
-
-      <div className="users-list">
-        {listOfUsers.map((user) => (
-          <div className="user-card" key={user._id || user.id || user.username}>
-            <h3>{user.name}</h3>
-            <p><strong>Age:</strong> {user.age}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Username:</strong> {user.username}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <AppContent />
+        </BrowserRouter>
+    );
 }
 
 export default App;

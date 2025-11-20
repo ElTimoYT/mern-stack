@@ -27,6 +27,24 @@ app.get("/getUsers", (req, res) => {
     });
 });
 
+// Endpoint to get a single user by ID
+app.get("/getUser/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const user = await UserModel.findById(id);
+        
+        // Verificar si el usuario existe
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.error("Error fetching user:", err);
+        res.status(500).json({ message: "Error al obtener el usuario", error: err.message });
+    }
+});
+
 // Endpoint to create a new user
 app.post("/createUser", async (req, res) => {
     try {
