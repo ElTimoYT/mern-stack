@@ -55,7 +55,6 @@ function Home() {
           Welcome to the User App! Create, view, update, and manage users with ease.
         </p>
 
-        {/* Podrías añadir un botón aquí, por ejemplo: */}
         <button
           className="
             mt-8                  

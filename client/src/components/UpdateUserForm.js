@@ -8,7 +8,6 @@ function UpdateUserForm() {
     const { id } = useParams();
     const navigate = useNavigate();
     
-    // Estado para los datos del usuario, inicializado vacío
     const [userData, setUserData] = useState({ 
         name: '', 
         age: '', 
@@ -16,7 +15,6 @@ function UpdateUserForm() {
         username: '' 
     });
     
-    // Estado para manejar la carga y las alertas
     const [isLoading, setIsLoading] = useState(true);
     const [modal, setModal] = useState({ show: false, title: '', text: '', icon: '', callback: null });
 
@@ -32,11 +30,9 @@ function UpdateUserForm() {
         setModal({ show: true, title, text, icon, callback });
     };
 
-    // 1. useEffect: Carga REAL de datos del usuario por ID
     useEffect(() => {
         setIsLoading(true);
         
-        // --- LLAMADA A LA API REAL ---
         axios.get(`http://localhost:3001/getUser/${id}`)
             .then((response) => {
                 const user = response.data;
@@ -49,11 +45,11 @@ function UpdateUserForm() {
                 setIsLoading(false);
             })
             .catch((error) => { 
-                console.error("Error al cargar datos del usuario:", error);
-                // Mostrar alerta y redirigir si falla la carga
+                console.error("Error loading user data:", error);
+                
                 showAlert(
-                    "Error de Carga", 
-                    `No se pudo cargar el usuario con ID: ${id}. Intenta más tarde.`, 
+                    "Load Error", 
+                    `Could not load user with ID: ${id}. Please try again later.`, 
                     "error", 
                     () => navigate('/users')
                 );
@@ -62,7 +58,6 @@ function UpdateUserForm() {
             
     }, [id, navigate]); 
 
-    // 2. Manejador de cambios en los inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData(prevData => ({
@@ -71,7 +66,6 @@ function UpdateUserForm() {
         }));
     };
 
-    // 3. Manejador de envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -82,7 +76,6 @@ function UpdateUserForm() {
             return;
         }
 
-        // Lógica de actualización: Se envían solo los campos editables
         const dataToUpdate = {
             name: userData.name,
             age: ageNumber,
@@ -91,24 +84,24 @@ function UpdateUserForm() {
         };
 
         axios
-            .put(`http://localhost:3001/updateUser/${id}`, dataToUpdate) // Usamos PUT para actualizar
+            .put(`http://localhost:3001/updateUser/${id}`, dataToUpdate) 
             .then(() => {
                 showAlert(
-                    "Actualización Exitosa",
-                    `Los datos del usuario ${userData.name} han sido guardados.`,
+                    "Update Successful",
+                    `User data for ${userData.name} has been saved.`,
                     "success",
-                    () => navigate("/users") // Vuelve a la lista de usuarios
+                    () => navigate("/users") 
                 );
             })
             .catch((error) => {
-                const errorMessage = error.response?.data?.message || "Ocurrió un error al intentar actualizar el usuario.";
-                showAlert("Error de Actualización", errorMessage, "error");
+                const errorMessage = error.response?.data?.message || "An error occurred while trying to update the user.";
+                showAlert("Update Error", errorMessage, "error");
             });
     };
 
     if (isLoading) {
         return (
-            <div className="p-8 text-center mt-16 text-xl text-gray-500">Cargando datos del usuario ID: {id}...</div>
+            <div className="p-8 text-center mt-16 text-xl text-gray-500">Loading user data for ID: {id}...</div>
         );
     }
 
@@ -116,12 +109,12 @@ function UpdateUserForm() {
         <div className="p-4 md:p-8 min-h-screen bg-gray-50 flex justify-center pt-10">
             <CustomAlert {...modal} onClose={handleCloseModal} />
             <div className="form-card bg-white max-w-lg w-full p-8 rounded-xl shadow-2xl border-t-4 border-green-500">
-                <h2 className="text-3xl font-bold text-green-600 mb-8 text-center">Actualizar Usuario</h2>
+                <h2 className="text-3xl font-bold text-green-600 mb-8 text-center">Update User</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     
                     {/* Campo Nombre */}
-                    <label className="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                    <label className="block text-sm font-medium text-gray-700">Full name</label>
                     <input
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors"
                         type="text"
@@ -131,7 +124,6 @@ function UpdateUserForm() {
                         required
                     />
 
-                    {/* Campo Edad */}
                     <label className="block text-sm font-medium text-gray-700">Edad</label>
                     <input
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors"
@@ -143,7 +135,6 @@ function UpdateUserForm() {
                         required
                     />
 
-                    {/* Campo Email */}
                     <label className="block text-sm font-medium text-gray-700">Email</label>
                     <input
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors"
@@ -154,7 +145,6 @@ function UpdateUserForm() {
                         required
                     />
 
-                    {/* Campo Username */}
                     <label className="block text-sm font-medium text-gray-700">Username</label>
                     <input
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors"
@@ -165,9 +155,8 @@ function UpdateUserForm() {
                         required
                     />
                     
-                    {/* Campo Contraseña (Deshabilitado o no mostrado) */}
                     <div className="text-sm text-gray-500 pt-2">
-                        La contraseña no puede ser modificada desde este formulario.
+                        The password cannot be changed here. To update the password, please use the "Reset Password" feature.
                     </div>
 
                     <button 
@@ -177,7 +166,7 @@ function UpdateUserForm() {
                             hover:bg-green-600 transition-colors shadow-lg mt-5
                         "
                     >
-                        Guardar Cambios
+                        Save Changes
                     </button>
                     <button 
                         type="button"
@@ -187,7 +176,7 @@ function UpdateUserForm() {
                             hover:bg-gray-400 transition-colors shadow-md mt-3
                         "
                     >
-                        Cancelar
+                        Cancel
                     </button>
                 </form>
             </div>

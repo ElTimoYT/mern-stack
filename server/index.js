@@ -33,7 +33,6 @@ app.get("/getUser/:id", async (req, res) => {
         const id = req.params.id;
         const user = await UserModel.findById(id);
         
-        // Verificar si el usuario existe
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
@@ -55,14 +54,12 @@ app.post("/createUser", async (req, res) => {
     } catch (err) {
         console.error("Error creating user:", err);
 
-        // Si el username ya existe
         if (err.code === 11000) {
             return res.status(400).json({ 
                 message: "El username ya está en uso." 
             });
         }
 
-        // Otros errores (campos requeridos vacíos, tipos incorrectos...)
         res.status(500).json({ 
             message: "Error al crear el usuario", 
             error: err.message 

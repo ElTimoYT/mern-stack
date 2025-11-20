@@ -26,11 +26,10 @@ function UserDatabase() {
 
     const closeModal = () => {
         setModal({ ...modal, show: false });
-        setIdToDelete(null); // Limpiamos el ID pendiente
+        setIdToDelete(null); 
     };
 
     const handleUpdate = (userId) => {
-        // Redirigir al componente de actualización con el ID
         navigate(`/update/${userId}`);
     };
 
@@ -41,7 +40,7 @@ function UserDatabase() {
             title: "¿Estás seguro?",
             text: "Esta acción eliminará al usuario permanentemente. ¿Deseas continuar?",
             icon: "warning",
-            type: "confirm" // <--- CAMBIO: Usamos un string para identificar el tipo
+            type: "confirm" 
         });
     };
 
@@ -62,7 +61,7 @@ function UserDatabase() {
                     title: "¡Eliminado!",
                     text: "El usuario ha sido eliminado correctamente.",
                     icon: "success",
-                    type: "alert" // <--- CAMBIO: Ahora es una alerta normal
+                    type: "alert" 
                 });
             })
             .catch((err) => {
@@ -72,7 +71,7 @@ function UserDatabase() {
                     title: "Error",
                     text: "Hubo un problema al intentar eliminar el usuario.",
                     icon: "error",
-                    type: "alert" // <--- CAMBIO
+                    type: "alert"
                 });
             });
     };
@@ -80,7 +79,6 @@ function UserDatabase() {
 return (
         <div className="app-container p-4 md:p-8 min-h-screen bg-gray-50">
             
-            {/* Renderizamos el CustomAlert aquí */}
             <CustomAlert 
                 show={modal.show}
                 title={modal.title}
@@ -124,7 +122,6 @@ return (
                                 Update
                             </button>
                             
-                            {/* Aquí llamamos a initiateDelete en lugar de handleDelete directo */}
                             <button 
                                 onClick={() => initiateDelete(user._id || user.id || user.username)}
                                 className="bg-red-500 text-white text-xs px-3 py-1 rounded-full hover:bg-red-600 transition-colors shadow-md"

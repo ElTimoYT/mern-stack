@@ -31,8 +31,8 @@ function CreateUserForm() {
 
         if (!name.trim() || !email.trim() || !username.trim() || !password || ageNumber <= 0 || isNaN(ageNumber)) {
             showAlert(
-                "Error de Validación",
-                "Por favor, completa todos los campos correctamente (la edad debe ser un número positivo).",
+                "Validation Error",
+                "Please, ensure all fields are filled correctly. Age must be a positive number.",
                 "warning"
             );
             return;
@@ -48,16 +48,16 @@ function CreateUserForm() {
             })
             .then(() => {
                 showAlert(
-                    "Usuario Creado Exitosamente",
-                    "El nuevo usuario ha sido añadido al sistema.",
+                    "User Created Successfully",
+                    "The new user has been added to the system.",
                     "success",
                     () => navigate("/users")
                 );
             })
             .catch((error) => {
-                const errorMessage = error.response?.data?.message || "Ocurrió un error de conexión con el servidor.";
+                const errorMessage = error.response?.data?.message || "A server connection error occurred.";
                 showAlert(
-                    "Error al crear usuario",
+                    "User Creation Error",
                     errorMessage,
                     "error"
                 );
@@ -68,7 +68,7 @@ function CreateUserForm() {
         <div className="p-4 md:p-8 min-h-screen bg-gray-50 flex justify-center pt-10">
             <CustomAlert {...modal} onClose={handleCloseModal} />
             <div className="form-card bg-white max-w-lg w-full p-8 rounded-xl shadow-2xl border-t-4 border-green-500">
-                <h2 className="text-3xl font-bold text-green-600 mb-8 text-center">Crear Nuevo Usuario</h2>
+                <h2 className="text-3xl font-bold text-green-600 mb-8 text-center">Create New User</h2>
 
                 <form onSubmit={createUser} className="space-y-5">
                     <input
@@ -119,7 +119,7 @@ function CreateUserForm() {
                             hover:bg-green-600 transition-colors shadow-lg
                         "
                     >
-                        Crear Usuario
+                        Create User
                     </button>
                     <button 
                         type="button"
@@ -129,7 +129,7 @@ function CreateUserForm() {
                             hover:bg-gray-400 transition-colors shadow-md mt-3
                         "
                     >
-                        Cancelar
+                        Cancel
                     </button>
                 </form>
             </div>

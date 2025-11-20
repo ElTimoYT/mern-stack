@@ -10,11 +10,9 @@ function App() {
     const linkBaseClasses = "block px-4 py-2 rounded-full transition-all duration-300";
     const linkInactiveClasses = "text-gray-300 hover:bg-indigo-600 hover:text-white";
     
-    // Componente wrapper para usar hooks de Router
     const AppContent = () => {
         const location = useLocation();
 
-        // Estilos dinámicos para el enlace activo
         const getLinkClasses = (path) => 
             `${linkBaseClasses} ${location.pathname === path || location.pathname.startsWith(path + '/')
                 ? 'bg-indigo-600 text-white shadow-md' 

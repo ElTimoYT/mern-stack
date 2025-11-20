@@ -34,7 +34,6 @@ const CustomAlert = ({ show, title, text, icon, onClose, onConfirm }) => {
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
                     <p className="text-sm text-gray-600 text-center mb-4">{text}</p>
                     
-                    {/* Lógica de Botones: Si hay onConfirm mostramos dos, si no, solo uno */}
                     <div className="flex space-x-3 w-full">
                         {onConfirm ? (
                             <>
@@ -42,13 +41,13 @@ const CustomAlert = ({ show, title, text, icon, onClose, onConfirm }) => {
                                     onClick={onClose}
                                     className="flex-1 bg-gray-300 text-gray-800 font-bold py-2 rounded-lg hover:bg-gray-400 transition-colors"
                                 >
-                                    Cancelar
+                                    Cancel
                                 </button>
                                 <button
                                     onClick={onConfirm}
                                     className="flex-1 bg-red-500 text-white font-bold py-2 rounded-lg hover:bg-red-600 transition-colors"
                                 >
-                                    Eliminar
+                                    Delete
                                 </button>
                             </>
                         ) : (
@@ -56,7 +55,7 @@ const CustomAlert = ({ show, title, text, icon, onClose, onConfirm }) => {
                                 onClick={onClose}
                                 className={`w-full bg-indigo-500 text-white font-bold py-2 rounded-lg hover:bg-indigo-600 transition-colors`}
                             >
-                                Aceptar
+                                Ok
                             </button>
                         )}
                     </div>
