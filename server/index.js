@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const UserModel = require('./models/Users');
 const app = express();
+require('dotenv').config();
 app.use(express.json());
 app.use(cors());
 
 
-mongoose.connect("<insert your MongoDB connection string here>").then
+mongoose.connect(process.env.DB_CONNECTION_STRING).then
 (() => {
     console.log("Connected to the database");
 }).catch((err) => {
